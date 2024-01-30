@@ -56,10 +56,13 @@ if [ -n "${SERVER_DESCRIPTION}" ]; then
 fi
 if [ -n "${SERVER_PASSWORD}" ]; then
     SERVER_PASSWORD=$(sed -e 's/^"\(.*\)"$/\1/' -e "s/^'\(.*\)'$/\1/" <<< "$SERVER_PASSWORD")
+    SERVER_PASSWORD=$(printf '%q\n' "$SERVER_PASSWORD")
     echo "SERVER_PASSWORD=${SERVER_PASSWORD}"
     sed -E -i "s/ServerPassword=\"[^\"]*\"/ServerPassword=\"$SERVER_PASSWORD\"/" /palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
 fi
 if [ -n "${ADMIN_PASSWORD}" ]; then
+    ADMIN_PASSWORD=$(sed -e 's/^"\(.*\)"$/\1/' -e "s/^'\(.*\)'$/\1/" <<< "$ADMIN_PASSWORD")
+    ADMIN_PASSWORD=$(printf '%q\n' "$ADMIN_PASSWORD")
     ADMIN_PASSWORD=$(sed -e 's/^"\(.*\)"$/\1/' -e "s/^'\(.*\)'$/\1/" <<< "$ADMIN_PASSWORD")
     echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}" 
     sed -E -i "s/AdminPassword=\"[^\"]*\"/AdminPassword=\"$ADMIN_PASSWORD\"/" /palworld/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
